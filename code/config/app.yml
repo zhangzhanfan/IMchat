@@ -1,0 +1,2 @@
+mysql:
+  dsn: root:136szssl668AAA0@tcp(43.136.120.152:3306)/imchat?charset=utf8mb4&parseTime=True&loc=Local
