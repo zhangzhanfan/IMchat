@@ -79,6 +79,7 @@ func Chat(writer http.ResponseWriter, request *http.Request) {
 	go sendProc(node)
 	//5.完成接收逻辑
 	go recvProc(node)
+	sendMsg(userId, []byte("欢迎加入聊天系统"))
 
 }
 
@@ -171,14 +172,14 @@ func dispatch(data []byte) {
 	}
 	switch msg.Type {
 	case 1: //私信
-		sendMsg(msg.FromId, msg.TargetId, data)
+		sendMsg(msg.TargetId, data)
 	}
 }
 
-func sendMsg(userId int64, targetId int64, msg []byte) {
+func sendMsg(userId int64, msg []byte) {
 	rwLocker.RLock()
-	node, ok := clientMap[targetId]
-	rwLocker.Unlock()
+	node, ok := clientMap[userId]
+	rwLocker.RUnlock()
 	if ok {
 		node.DataQueue <- msg
 	}

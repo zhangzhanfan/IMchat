@@ -1,6 +1,7 @@
 package service
 
 import (
+	"code/models"
 	"code/utils"
 	"fmt"
 	"net/http"
@@ -48,4 +49,8 @@ func MsgHandler(ws *websocket.Conn, c *gin.Context) {
 	if err != nil {
 		fmt.Println("报错了 error is", err)
 	}
+}
+
+func SendUserMsg(c *gin.Context) {
+	models.Chat(c.Writer, c.Request)
 }
